@@ -8,10 +8,8 @@ export function NotePreview({ note }) {
     NoteImg: <NoteImg {...note} />,
     NoteTodos: <NoteTodos {...note} />,
   }
-  const { style, isPinned } = note
-
   return (
-    <section className='note-preview' style={isPinned ? style: {backgroundColor: 'none'}}>
+    <section className='note-preview'>
       {dynamicCmpMap[note.type]}
     </section>
   )

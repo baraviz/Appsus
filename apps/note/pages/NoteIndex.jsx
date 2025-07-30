@@ -1,8 +1,10 @@
-import { noteService } from '../../../services/note.service.js'
+
+import { noteService } from '../services/note.service.js'
 import { NoteList } from '../cmps/NoteList.jsx'
+import { AddNote } from '../cmps/AddNote.jsx'
 
 const { useState, useEffect } = React
-const { Link, useSearchParams } = ReactRouterDOM
+const { Link} = ReactRouterDOM
 
 noteService
 export function NoteIndex() {
@@ -22,21 +24,20 @@ export function NoteIndex() {
       })
   }
 
-  //   console.log(notes);
+  function onSaveNote(note){
+    noteService.save(note)
+    .then(note=>setNotes(notes=>[...notes,note]))
+  }
+
+    console.log(notes);
 
   if (!notes) return <div className='loader'>Loading...</div>
   return (
     <section className='container'>
       <header>
-        logo
       </header>
       <main>
-        <div className='navigation'>
-        <Link to='/note'>Notes</Link>
-        {/* <Link>Reminders</Link>
-        <Link>Archive</Link>
-        <Link>Bim</Link> */}
-        </div>
+        < AddNote onSaveNote={onSaveNote}/>
         <NoteList notes={notes} />
       </main>
     </section>
