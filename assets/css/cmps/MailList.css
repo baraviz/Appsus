@@ -6,7 +6,9 @@ ul {
     background-color: var(--unread-mail-bg);
     text-align: center;
     padding: 1em;
-    border-bottom: solid 1px grey;
+    border-bottom: solid 2px #edeff1;
+    font-family: Roboto;
+    font-size: 16px;
 }
 
 ul .is-read {

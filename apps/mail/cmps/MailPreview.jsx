@@ -1,5 +1,5 @@
 export function MailPreview({ mail }) {
-    
+
     const { subject, body } = mail
 
     return (
