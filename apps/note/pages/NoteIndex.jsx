@@ -29,7 +29,7 @@ export function NoteIndex() {
     .then(note=>setNotes(notes=>[...notes,note]))
   }
 
-    console.log(notes);
+    // console.log(notes);
 
   if (!notes) return <div className='loader'>Loading...</div>
   return (

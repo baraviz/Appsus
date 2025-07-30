@@ -4,7 +4,7 @@ const { useState } = React
 export function AddNote({onSaveNote}) {
   const [isAddNote, setIsAddNote] = useState(false)
   const [noteToEdit, setNoteToEdit] = useState(noteService.getEmptyNote())
-  console.log(noteToEdit)
+  // console.log(noteToEdit)
 
   function handleChange({ target }) {
     const field = target.name
