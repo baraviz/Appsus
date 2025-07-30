@@ -2,6 +2,7 @@ import { noteService } from '../../../services/note.service.js'
 import { NoteList } from '../cmps/NoteList.jsx'
 
 const { useState, useEffect } = React
+const { Link, useSearchParams } = ReactRouterDOM
 
 noteService
 export function NoteIndex() {
@@ -26,8 +27,16 @@ export function NoteIndex() {
   if (!notes) return <div className='loader'>Loading...</div>
   return (
     <section className='container'>
-      <header>Notes header</header>
+      <header>
+        logo
+      </header>
       <main>
+        <div className='navigation'>
+        <Link to='/note'>Notes</Link>
+        {/* <Link>Reminders</Link>
+        <Link>Archive</Link>
+        <Link>Bim</Link> */}
+        </div>
         <NoteList notes={notes} />
       </main>
     </section>
