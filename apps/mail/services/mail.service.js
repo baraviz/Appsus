@@ -1,10 +1,9 @@
 // mail service
 
-import { loadFromStorage, makeId, saveToStorage } from '../services/util.service.js'
-import { storageService } from '../services/async-storage.service.js'
+import { utilService } from '../../../services/util.service.js'
+import { storageService } from '../../../services/async-storage.service.js'
 
 const MAIL_KEY = 'mailDB'
-_createMails(mails)
 
 const gMailsDemoData = [
     {
@@ -174,6 +173,8 @@ const gMailsDemoData = [
     }
 ]
 
+_createMails()
+
 export const mailService = {
     query,
     get,
@@ -215,17 +216,17 @@ function save(mail) {
 
 
 function _createMails() {
-    let mails = loadFromStorage(MAIL_KEY)
+    let mails = utilService.loadFromStorage(MAIL_KEY)
     if (!mails || !mails.length) {
         mails = gMailsDemoData
-        saveToStorage(MAIL_KEY, mails)
+        utilService.saveToStorage(MAIL_KEY, mails)
     }
 }
 
-function _createMail(vendor, speed = 250) {
-    const mail = getEmptyMail(vendor, speed)
-    mail.id = makeId()
-    return mail
-}
+// function _createMail(vendor, speed = 250) {
+//     const mail = getEmptyMail(vendor, speed)
+//     mail.id = makeId()
+//     return mail
+// }
 
 

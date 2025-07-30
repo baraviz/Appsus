@@ -7,12 +7,17 @@ export function MailIndex() {
     const [mails, setMails] = useState([])
 
     useEffect(() => {
-        mailService.query().then(setMails)
+        mailService.query()
+            .then((mails) => setMails(mails))
+            .catch((err) => console.error('can not fetch data', err)
+            )
     }, [])
 
     return (
         <section className='container'>
-            <h1>Mail app</h1>
+            <header>
+                <h1>Mail app</h1>
+            </header>
             <MailList mails={mails} />
         </section>
     )
