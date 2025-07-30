@@ -10,4 +10,8 @@
     --gray1: #aaa;
     --gray2: #888;
     --gray3: #333;
+
+    /* MAIL */
+    --read-mail-bg: #F2F6FC;
+    --unread-mail-bg: #ffffff;
 }

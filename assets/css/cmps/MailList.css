@@ -1,0 +1,18 @@
+ul {
+    list-style-type: none;
+}
+
+.mail-list li {
+    background-color: var(--unread-mail-bg);
+    text-align: center;
+    padding: 1em;
+    border-bottom: solid 1px grey;
+}
+
+ul .is-read {
+    background-color: var(--read-mail-bg);
+}
+
+.mail-list-container {
+    border-radius: 16px;
+}
