@@ -16,8 +16,10 @@ export function MailIndex() {
 
     function onSaveMail(mail) {
         mailService.save(mail)
-            .then(mail => setMails(mails => [...mails, mail]))
+            .then(mail => setMails(mails => [mail, ...mails]))
     }
+
+    const unreadMailsCount = mails.filter((mail) => !mail.isRead).length
 
     return (
         <section className='container'>
@@ -27,6 +29,8 @@ export function MailIndex() {
             <div className='mail-layout'>
                 <aside>
                     <Link to='/mail/compose'><button className='compose-btn'><img src="./assets/icons/editIcon.svg" alt="edit" />Compose</button></Link>
+                    <Link to='/mail'>All ({ mails.length })</Link>
+                    <Link to='/mail/unread'>Unread ({ unreadMailsCount })</Link>
                 </aside>
                 <main>
                     <MailList mails={mails} />
