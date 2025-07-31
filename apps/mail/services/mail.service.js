@@ -180,6 +180,7 @@ export const mailService = {
     get,
     remove,
     save,
+    getEmptyMail,
 }
 
 function query(filterBy = {}) {
@@ -222,6 +223,21 @@ function _createMails() {
         utilService.saveToStorage(MAIL_KEY, mails)
     }
 }
+
+function getEmptyMail() {
+    return {
+        id: 'e101',
+        createdAt: 1551133930500,
+        subject: 'Miss you!',
+        body: 'Would love to catch up sometimes',
+        isRead: false,
+        sentAt: 1551133930594,
+        removedAt: null,
+        from: 'momo@momo.com',
+        to: 'user@appsus.com'
+    }
+}
+
 
 // function _createMail(vendor, speed = 250) {
 //     const mail = getEmptyMail(vendor, speed)
