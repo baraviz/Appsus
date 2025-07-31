@@ -22,6 +22,7 @@
 @import './apps/note/Navigation.css';
 @import './apps/note/Header.css';
 @import './apps/note/AddNote.css';
+@import './apps/note/NoteTools.css';
 
 /* SETUP */
 @import './setup/typography.css';

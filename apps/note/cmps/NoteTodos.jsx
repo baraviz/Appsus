@@ -18,7 +18,7 @@ export function NoteTodos({ note, onUpdate }) {
         {todos.map((todo) => (
           <li key={todo.txt} className={`todo ${todo.doneAt ? 'active' : ''}`}>
             <button onClick={() => onChangeTodo(todo)}>
-              {todo.doneAt ? '✔' : ''}
+              {todo.doneAt ? '✔' : '□'}
             </button>
             {todo.txt}
           </li>

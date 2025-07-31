@@ -16,21 +16,22 @@ export function NoteIndex() {
   }, [])
 
   function loadNotes() {
-    noteService.query()
-      .then((notes) =>  setNotes(notes))
+    noteService
+      .query()
+      .then((notes) => setNotes(notes))
       .catch((err) => {
         console.log('err:', err)
         // showErrorMsg('Cannot get notes!')
       })
   }
 
-function onUpdate(note){
- noteService.save(note).
- then(note=> loadNotes())
-}
+  function onUpdate(note) {
+    noteService.save(note).then((note) => loadNotes())
+  }
 
   function onSaveNote(note) {
-    noteService.save(note)
+    noteService
+      .save(note)
       .then((note) => {
         setNotes((notes) => [note, ...notes])
         console.log('save')
@@ -52,9 +53,12 @@ function onUpdate(note){
       })
   }
 
-  // console.log(notes);
-
   if (!notes) return <div className='loader'>Loading...</div>
+  const pinnedList = notes.filter((note) => note.isPinned)
+  const notPinnedList = notes.filter((note) => !note.isPinned)
+  console.log(pinnedList)
+  console.log(notPinnedList)
+
   return (
     <section className='note-index container'>
       <Header />
@@ -63,11 +67,26 @@ function onUpdate(note){
         <Navigation />
         <section className='note-apply'>
           <AddNote onSaveNote={onSaveNote} />
-          <NoteList
-            notes={notes}
-            onRemoveNote={onRemoveNote}
-            onUpdate={onUpdate}
-          />
+          {pinnedList && (
+            <React.Fragment>
+              <h2>Pinned</h2>
+              <NoteList
+                notes={pinnedList}
+                onRemoveNote={onRemoveNote}
+                onUpdate={onUpdate}
+              />
+            </React.Fragment>
+          )}
+          {notPinnedList && (
+            <React.Fragment>
+              <h2>Others</h2>
+              <NoteList
+                notes={notPinnedList}
+                onRemoveNote={onRemoveNote}
+                onUpdate={onUpdate}
+              />
+            </React.Fragment>
+          )}
         </section>
       </section>
     </section>
