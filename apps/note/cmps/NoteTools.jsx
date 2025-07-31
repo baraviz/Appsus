@@ -1,17 +1,30 @@
-export function NoteTools({ note, onRemoveNote }) {
+export function NoteTools({ note, onRemoveNote, onSaveNote, onUpdate }) {
+  function onSetColor({ target }) {
+    note.style = { backgroundColor: target.value }
+    onUpdate(note)
+  }
+
+  function onCopy(){     
+    const copyNote = structuredClone(note)
+    copyNote.id = ''
+    onSaveNote(copyNote)
+  }
+
   return (
     <section className='note-tools flex'>
-      {/* <input type='color' name='color' /> */}
-      {/* <button onClick={()=>onRemoveNote(note.id)}>Delete</button> */}
       <div className='palette'>
         <img src='../assets/icons/palette.svg' alt='' />
-        <input type='color' name='color' />
+        <input onChange={onSetColor} type='color' name='color' />
       </div>
       <img
         src='../assets/icons/delete.svg'
         onClick={() => onRemoveNote(note.id)}
       />
-      <img src='../assets/icons/copy.svg' alt='' />
+      <img onClick={onCopy}
+        src='../assets/icons/copy.svg'
+        alt=''
+        
+      />
     </section>
   )
 }

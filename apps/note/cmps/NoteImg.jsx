@@ -1,4 +1,3 @@
-const { useState } = React
 
 export function NoteImg({ note }) {
 const {info} = note

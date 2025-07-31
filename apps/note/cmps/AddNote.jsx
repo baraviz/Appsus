@@ -6,14 +6,13 @@ export function AddNote({ onSaveNote }) {
   const [placeholder, setPlaceholder] = useState('')
   const [nameField, setNameField] = useState('txt')
   const [noteToEdit, setNoteToEdit] = useState(noteService.getEmptyNote())
-  // console.log(noteToEdit)
+ 
 
   function handleChange({ target }) {
     const field = target.name
     let value = target.value
     setNoteToEdit((prevNote) => ({
-      ...prevNote,
-      info: { ...prevNote.info, [field]: value },
+       ...prevNote,info: { ...prevNote.info, [field]: value },
     }))
   }
 
@@ -21,7 +20,6 @@ export function AddNote({ onSaveNote }) {
     setNoteToEdit((prev) => ({ ...prev, type }))
     setNameField(name)
     setPlaceholder(placeholder)
-
     setIsAddNote((isAddNote) => !isAddNote)
   }
 
@@ -31,7 +29,7 @@ export function AddNote({ onSaveNote }) {
     if (noteToEdit.type === 'NoteTodos') {
       noteToEdit.info.todos = strToList(noteToEdit.info.todos)
     }
-    // console.log(noteToEdit);
+    
     onSaveNote(noteToEdit)
     setNoteToEdit(noteService.getEmptyNote())
   }
