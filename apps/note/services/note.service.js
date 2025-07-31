@@ -35,11 +35,12 @@ function save(note) {
 
 function getEmptyNote(){
  return{
-  createdAt:'',
+  createdAt: Date.now(),
   type:'NoteTxt',
   style:{backgroundColor: 'none'},
   info:{title:'',}
  }
+
 }
 
 function _createNotes() {

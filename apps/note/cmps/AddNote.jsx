@@ -3,6 +3,7 @@ const { useState } = React
 
 export function AddNote({onSaveNote}) {
   const [isAddNote, setIsAddNote] = useState(false)
+  const [placeholder, setPlaceholder] = useState('Take a note')
   const [noteToEdit, setNoteToEdit] = useState(noteService.getEmptyNote())
   // console.log(noteToEdit)
 
@@ -19,37 +20,28 @@ export function AddNote({onSaveNote}) {
   function onSave(ev) {
     ev.preventDefault()
     onOpenNote()
-    noteToEdit.createdAt = Date.now()
     onSaveNote(noteToEdit)
   }
 
+const {info} = noteToEdit
   return (
     <section className='add-note'>
       {!isAddNote && (
+        <React.Fragment>
         <input
           onClick={onOpenNote} type='text'
           name=''
           id=''
           placeholder='Take a note'
         />
+        <button>img</button>
+        </React.Fragment>
       )}
       {isAddNote && (
         <section className='NoteType flex '>
           <form>
-            <input
-              onChange={handleChange}
-              type='text'
-              name='title'
-              id='title'
-              placeholder='Title'
-            />
-            <input
-              onChange={handleChange}
-              type='text'
-              name='txt'
-              id='txt'
-              placeholder='Take a note'
-            />
+            <input onChange={handleChange} type='text' name='title' id='title'placeholder='Title'/>
+            <input onChange={handleChange}type='text'name='txt' id='txt'placeholder={placeholder}/>
             <button onClick={onSave}>close</button>
           </form>
         </section>
