@@ -24,7 +24,7 @@ export function AddNote({onSaveNote}) {
   }
 
   return (
-    <section>
+    <section className='add-note'>
       {!isAddNote && (
         <input
           onClick={onOpenNote} type='text'

@@ -1,1 +1,10 @@
  /* note list */
+
+ .note-list{   
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 240px);
+    gap: 16px;
+    justify-content: center;
+  
+}
+

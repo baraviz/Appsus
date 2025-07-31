@@ -2,6 +2,8 @@
 import { noteService } from '../services/note.service.js'
 import { NoteList } from '../cmps/NoteList.jsx'
 import { AddNote } from '../cmps/AddNote.jsx'
+import { Header } from '../cmps/Header.jsx'
+import { Navigation } from '../cmps/Navgatin.jsx'
 
 const { useState, useEffect } = React
 const { Link} = ReactRouterDOM
@@ -33,13 +35,17 @@ export function NoteIndex() {
 
   if (!notes) return <div className='loader'>Loading...</div>
   return (
-    <section className='container'>
-      <header>
-      </header>
-      <main>
-        < AddNote onSaveNote={onSaveNote}/>
+    <section className='note-index container'>
+   
+       <Header/>
+    
+      <section className='main flex'>
+        <Navigation/>
+        <section className='note-apply'>
+        <AddNote onSaveNote={onSaveNote}/>
         <NoteList notes={notes} />
-      </main>
+        </section>
+      </section>
     </section>
   )
 }

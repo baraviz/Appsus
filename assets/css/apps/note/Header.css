@@ -1,0 +1,7 @@
+.note-header {
+  padding: 0.5714em;
+  line-height: 1.9285em;
+  background-color: aqua;
+  /* position: fixed; */
+  box-shadow:rgb(218, 220, 224) 0px -1px 0px 0px inset;
+}
