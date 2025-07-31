@@ -16,8 +16,7 @@ export function NoteIndex() {
   }, [])
 
   function loadNotes() {
-    noteService
-      .query()
+    noteService.query()
       .then((notes) => setNotes(notes))
       .catch((err) => {
         console.log('err:', err)
@@ -26,8 +25,7 @@ export function NoteIndex() {
   }
 
   function onSaveNote(note) {
-    noteService
-      .save(note)
+    noteService.save(note)
       .then((note) => {
         setNotes((notes) => [...notes, note])
         console.log('save')
@@ -60,7 +58,7 @@ export function NoteIndex() {
         <Navigation />
         <section className='note-apply'>
           <AddNote onSaveNote={onSaveNote} />
-          <NoteList notes={notes} onRemoveNote={onRemoveNote} />
+          <NoteList notes={notes} onRemoveNote={onRemoveNote} onSaveNote={onSaveNote} />
         </section>
       </section>
     </section>

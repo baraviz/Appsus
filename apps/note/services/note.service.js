@@ -61,7 +61,7 @@ function _createNotes() {
         createdAt: 1112223,
         type: 'NoteImg',
         isPinned: false,
-        info: { url: 'http://some-img/me', title: 'Bobi and Me' },
+        info: { url:"http://unsplash.it/460/340/?1", title: 'Bobi and Me' },
         style: { backgroundColor: '#00d' },
       },
       {
@@ -98,6 +98,15 @@ function _createNotes() {
             { txt: 'Bread', doneAt: null },
           ],
         },
+      },
+
+      {
+        id: 'n106',
+        createdAt: 1112223,
+        type: 'NoteImg',
+        isPinned: false,
+        info: { url:"http://unsplash.it/460/340/?2", title: 'Loli and Me' },
+        style: { backgroundColor: '#00d' },
       },
     ]
     utilService.saveToStorage(NOTE_KEY, notes)
