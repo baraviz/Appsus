@@ -8,8 +8,9 @@
 @import './cmps/Home.css';
 @import './cmps/UserMsg.css';
 @import './cmps/AppHeader.css';
-@import './cmps/MailList.css';
-@import './cmps/MailCompose.css';
+@import './apps/mail/MailList.css';
+@import './apps/mail/MailCompose.css';
+@import './apps/mail/MailPreview.css';
 
 
 

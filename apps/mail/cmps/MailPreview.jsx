@@ -1,11 +1,14 @@
-export function MailPreview({ mail }) {
+export function MailPreview({ mail, onDeleteMail }) {
 
     const { subject, body } = mail
 
     return (
         <article className="mail-preview">
-            <h2>Subject: {subject}</h2>
-            <h4>Mail Body: {body}</h4>
+            <h4 className={mail.isRead ? 'regular-txt' : 'bold-txt'}>{subject}</h4>
+            <h4 className={mail.isRead ? 'regular-txt' : 'bold-txt'}>
+                {body}
+                <button className="delete-btn" onClick={() => onDeleteMail(mail.id)}> Delete</button>
+            </h4>
         </article>
     )
 }
