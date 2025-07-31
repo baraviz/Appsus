@@ -1,5 +1,6 @@
 import { mailService } from '../services/mail.service.js'
 import { MailList } from '../cmps/MailList.jsx'
+const { Link, Outlet } = ReactRouterDOM
 
 const { useState, useEffect } = React
 
@@ -13,12 +14,25 @@ export function MailIndex() {
             )
     }, [])
 
+    function onSaveMail(mail) {
+        mailService.save(mail)
+            .then(mail => setMails(mails => [...mails, mail]))
+    }
+
     return (
         <section className='container'>
-            <header>
+            <header className='flex space-between'>
                 <h1>Mail app</h1>
             </header>
-            <MailList mails={mails} />
+            <div className='mail-layout'>
+                <aside>
+                    <Link to='/mail/compose'><button className='compose-btn'><img src="./assets/icons/editIcon.svg" alt="edit" />Compose</button></Link>
+                </aside>
+                <main>
+                    <MailList mails={mails} />
+                </main>
+            </div>
+            <Outlet context={{ onSaveMail }} />
         </section>
     )
 }

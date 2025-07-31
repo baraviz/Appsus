@@ -6,7 +6,10 @@ ul {
     background-color: var(--unread-mail-bg);
     text-align: center;
     padding: 1em;
-    border-bottom: solid 1px grey;
+    border-bottom: solid 2px #edeff1;
+    font-family: Roboto;
+    font-size: 16px;
+    transition: 0.2s;    
 }
 
 ul .is-read {
@@ -15,4 +18,9 @@ ul .is-read {
 
 .mail-list-container {
     border-radius: 16px;
+}
+
+.mail-list li:hover {
+    filter: drop-shadow(0 0 0.7rem rgb(220, 220, 220));
+    cursor: pointer;
 }
