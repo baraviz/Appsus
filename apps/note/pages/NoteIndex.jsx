@@ -17,17 +17,22 @@ export function NoteIndex() {
 
   function loadNotes() {
     noteService.query()
-      .then((notes) => setNotes(notes))
+      .then((notes) =>  setNotes(notes))
       .catch((err) => {
         console.log('err:', err)
-        showErrorMsg('Cannot get notes!')
+        // showErrorMsg('Cannot get notes!')
       })
   }
+
+function onUpdate(note){
+ noteService.save(note).
+ then(note=> loadNotes())
+}
 
   function onSaveNote(note) {
     noteService.save(note)
       .then((note) => {
-        setNotes((notes) => [...notes, note])
+        setNotes((notes) => [note, ...notes])
         console.log('save')
       })
 
@@ -58,7 +63,11 @@ export function NoteIndex() {
         <Navigation />
         <section className='note-apply'>
           <AddNote onSaveNote={onSaveNote} />
-          <NoteList notes={notes} onRemoveNote={onRemoveNote} onSaveNote={onSaveNote} />
+          <NoteList
+            notes={notes}
+            onRemoveNote={onRemoveNote}
+            onUpdate={onUpdate}
+          />
         </section>
       </section>
     </section>

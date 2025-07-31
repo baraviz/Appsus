@@ -1,13 +1,15 @@
-const { useState, useEffect } = React
-export function NoteTodos({ note, onSaveNote }) {
+const { useState } = React
+
+export function NoteTodos({ note, onUpdate }) {
   const { info, id } = note
+  const { todos } = info
+
+  const [noteEd, setNote] = useState(note)
 
   function onChangeTodo(todo) {
     todo.doneAt = todo.doneAt ? null : Date.now()
-    onSaveNote(id)
+    onUpdate(note)
   }
-
-  const { todos } = info
 
   return (
     <section className='note-todos'>

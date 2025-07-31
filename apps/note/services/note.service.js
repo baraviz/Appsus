@@ -36,7 +36,7 @@ function save(note) {
 function getEmptyNote(){
  return{
   createdAt: Date.now(),
-  type:'NoteTxt',
+  type:'',
   style:{backgroundColor: 'none'},
   info:{title:'',}
  }
@@ -53,7 +53,7 @@ function _createNotes() {
         type: 'NoteTxt',
         title:'Fullstack',
         isPinned: true,
-        style: { backgroundColor: '#00d' },
+        style: { backgroundColor: '#baf074ff' },
         info: { title:'Fullstack',txt: 'Fullstack Me Baby!' },
       },
       {
@@ -62,7 +62,7 @@ function _createNotes() {
         type: 'NoteImg',
         isPinned: false,
         info: { url:"http://unsplash.it/460/340/?1", title: 'Bobi and Me' },
-        style: { backgroundColor: '#00d' },
+        style: { backgroundColor: '#f074a6ff' },
       },
       {
         id: 'n103',
@@ -83,7 +83,7 @@ function _createNotes() {
         type: 'NoteTxt',
         isPinned: true,
         info: {  title:'', txt: 'Remember to call mom!' },
-        style: { backgroundColor: '#ffeb3b' },
+        style: { backgroundColor: '#f0e474ff' },
       },
       {
         id: 'n105',
@@ -106,7 +106,7 @@ function _createNotes() {
         type: 'NoteImg',
         isPinned: false,
         info: { url:"http://unsplash.it/460/340/?2", title: 'Loli and Me' },
-        style: { backgroundColor: '#00d' },
+        style: { backgroundColor: '#878ef3ff' },
       },
     ]
     utilService.saveToStorage(NOTE_KEY, notes)
