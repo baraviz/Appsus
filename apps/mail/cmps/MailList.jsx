@@ -1,6 +1,6 @@
 import { MailPreview } from "./MailPreview.jsx"
 
-export function MailList({ mails }) {
+export function MailList({ mails, onDeleteMail }) {
     return (
         <div className="mail-list-container">
             <ul className="mail-list">

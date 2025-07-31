@@ -53,3 +53,9 @@ main {
 .compose-btn img {
   width: 20px;
 }
+
+.mail-index {
+  background-color: #f7fafd;
+  border-radius: 16px;
+  
+}
