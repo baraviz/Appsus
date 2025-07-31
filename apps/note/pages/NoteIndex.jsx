@@ -36,6 +36,19 @@ export function NoteIndex() {
       .catch((err) => console.log(err))
   }
 
+  function onRemoveNote(noteId) {
+    noteService
+      .remove(noteId)
+      .then(() => {
+        setNotes((prevNotes) => prevNotes.filter((note) => note.id !== noteId))
+        // showSuccessMsg(`Note (${noteId}) removed successfully!`)
+      })
+      .catch((err) => {
+        console.log('Problem removing note:', err)
+        // showErrorMsg('Problem removing note!')
+      })
+  }
+
   // console.log(notes);
 
   if (!notes) return <div className='loader'>Loading...</div>
@@ -47,7 +60,7 @@ export function NoteIndex() {
         <Navigation />
         <section className='note-apply'>
           <AddNote onSaveNote={onSaveNote} />
-          <NoteList notes={notes} />
+          <NoteList notes={notes} onRemoveNote={onRemoveNote} />
         </section>
       </section>
     </section>

@@ -1,10 +1,16 @@
- /* note list */
+/* note list */
 
- .note-list{   
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 240px);
-    gap: 16px;
-    justify-content: center;
-  
+.note-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 240px);
+  gap: 16px;
+  justify-content: center;
 }
 
+.note-list li {
+  padding: 12px 16px;
+  min-height: 6.66666em;
+  border: 1px solid var(--border-note);
+  border-radius: 0.57142em;
+  font-size: 1.071428em;
+}

@@ -9,7 +9,7 @@ export function NotePreview({ note }) {
     NoteTodos: <NoteTodos {...note} />,
   }
   return (
-    <section className='note-preview' style={note.style}>
+    <section className='note-preview' >
       {dynamicCmpMap[note.type]}
     </section>
   )
