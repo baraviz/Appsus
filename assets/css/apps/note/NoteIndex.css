@@ -1,1 +1,13 @@
  /* note index */
+
+ .note-index{
+    font-family:Roboto;
+    font-size: 0.875rem;
+    line-height: 1.71428em;
+}
+
+.note-apply{
+  min-width: 0;
+  width: 100%;
+}
+

@@ -4,7 +4,7 @@ const { useState } = React
 export function AddNote({onSaveNote}) {
   const [isAddNote, setIsAddNote] = useState(false)
   const [noteToEdit, setNoteToEdit] = useState(noteService.getEmptyNote())
-  console.log(noteToEdit)
+  // console.log(noteToEdit)
 
   function handleChange({ target }) {
     const field = target.name
@@ -24,7 +24,7 @@ export function AddNote({onSaveNote}) {
   }
 
   return (
-    <section>
+    <section className='add-note'>
       {!isAddNote && (
         <input
           onClick={onOpenNote} type='text'

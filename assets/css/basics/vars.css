@@ -14,4 +14,8 @@
     /* MAIL */
     --read-mail-bg: #F2F6FC;
     --unread-mail-bg: #ffffff;
+
+    /* NOTES */
+    --border-note:#e0e0e0;
+    --nav-note-bg:#feefc3;
 }
