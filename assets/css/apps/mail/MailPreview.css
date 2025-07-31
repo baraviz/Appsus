@@ -1,0 +1,15 @@
+.regular-txt {
+    font-family: Roboto;
+    font-size: 14px;
+}
+
+.bold-txt {
+    font-family: Roboto-Bold;
+    font-size: 14px;
+}
+
+.mail-preview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

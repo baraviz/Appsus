@@ -1,6 +1,6 @@
 import { mailService } from '../../mail/services/mail.service.js'
 const { useState } = React
-const { useOutletContext, useNavigate } = ReactRouterDOM
+const { useOutletContext } = ReactRouterDOM
 
 export function MailCompose() {
     console.log('Hi Im Here');
