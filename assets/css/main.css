@@ -21,9 +21,9 @@
 @import './apps/note/NoteList.css';
 @import './apps/note/NotePreview.css';
 @import './apps/note/Navigation.css';
-@import './apps/note/Header.css';
 @import './apps/note/AddNote.css';
 @import './apps/note/NoteTools.css';
+@import './apps/note/NoteTodos.css';
 
 /* SETUP */
 @import './setup/typography.css';

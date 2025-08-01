@@ -6,13 +6,14 @@ export function AddNote({ onSaveNote }) {
   const [placeholder, setPlaceholder] = useState('')
   const [nameField, setNameField] = useState('txt')
   const [noteToEdit, setNoteToEdit] = useState(noteService.getEmptyNote())
- 
 
+  const { info } = noteToEdit
   function handleChange({ target }) {
     const field = target.name
     let value = target.value
     setNoteToEdit((prevNote) => ({
-       ...prevNote,info: { ...prevNote.info, [field]: value },
+      ...prevNote,
+      info: { ...prevNote.info, [field]: value },
     }))
   }
 
@@ -26,10 +27,10 @@ export function AddNote({ onSaveNote }) {
   function onSave(ev) {
     ev.preventDefault()
     onOpenNote()
+    if (!info.title && (!info.txt || !info.url || !info.todos)) return
     if (noteToEdit.type === 'NoteTodos') {
       noteToEdit.info.todos = strToList(noteToEdit.info.todos)
     }
-    
     onSaveNote(noteToEdit)
     setNoteToEdit(noteService.getEmptyNote())
   }

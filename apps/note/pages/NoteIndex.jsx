@@ -1,22 +1,26 @@
 import { noteService } from '../services/note.service.js'
 import { NoteList } from '../cmps/NoteList.jsx'
 import { AddNote } from '../cmps/AddNote.jsx'
-import { Header } from '../cmps/Header.jsx'
 import { Navigation } from '../cmps/Navgatin.jsx'
 import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js'
+import { NoteFilter } from '../cmps/NoteFilter.jsx'
 
 const { useState, useEffect } = React
+const { useSearchParams } = ReactRouterDOM
 
 export function NoteIndex() {
   const [notes, setNotes] = useState(null)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [filterBy, setFilterBy] = useState(noteService.getFilterFromSearchParams(searchParams))
+
 
   useEffect(() => {
+    setSearchParams(noteService.getTruthyValues(filterBy))
     loadNotes()
-  }, [])
+  }, [filterBy])
 
   function loadNotes() {
-    noteService
-      .query()
+    noteService.query(filterBy)
       .then((notes) => setNotes(notes))
       .catch((err) => {
         console.log('err:', err)
@@ -49,19 +53,24 @@ export function NoteIndex() {
       })
   }
 
+
+   function onSetFilterBy(filterByToEdit) {
+        setFilterBy({ ...filterByToEdit })
+    }
+
   if (!notes) return <div className='loader'>Loading...</div>
-  const pinnedList = notes.filter((note) => note.isPinned)
+  const pinnedList = notes.filter((note) => note.isPinned)  
   const notPinnedList = notes.filter((note) => !note.isPinned)
 
   return (
     <section className='note-index container'>
-      <Header />
+      <NoteFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
 
       <section className='main flex'>
         <Navigation />
         <section className='note-apply'>
           <AddNote onSaveNote={onSaveNote} />
-          {pinnedList && (
+          {!!pinnedList.length && (
             <React.Fragment>
               <h2>Pinned</h2>
               <NoteList
@@ -74,7 +83,7 @@ export function NoteIndex() {
           )}
           {notPinnedList && (
             <React.Fragment>
-              <h2>Others</h2>
+             {!!pinnedList.length && <h2>Others</h2>}
               <NoteList
                 notes={notPinnedList}
                 onRemoveNote={onRemoveNote}
