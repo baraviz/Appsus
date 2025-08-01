@@ -19,6 +19,9 @@ export function NoteIndex() {
     loadNotes()
   }, [filterBy])
 
+  // console.log(searchParams);
+  
+
   function loadNotes() {
     noteService.query(filterBy)
       .then((notes) => setNotes(notes))
