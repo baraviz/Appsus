@@ -13,15 +13,15 @@ export function NoteTools({ note, onRemoveNote, onSaveNote, onUpdate }) {
   return (
     <section className='note-tools flex'>
       <div className='palette'>
-        <img src='../assets/icons/palette.svg' alt='' />
+        <img src='./assets/icons/palette.svg' alt='' />
         <input onChange={onSetColor} type='color' name='color' />
       </div>
       <img
-        src='../assets/icons/delete.svg'
+        src='./assets/icons/delete.svg'
         onClick={() => onRemoveNote(note.id)}
       />
       <img onClick={onCopy}
-        src='../assets/icons/copy.svg'
+        src='./assets/icons/copy.svg'
         alt=''
         
       />
