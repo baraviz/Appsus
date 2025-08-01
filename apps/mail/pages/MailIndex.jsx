@@ -1,48 +1,99 @@
-import { mailService } from '../services/mail.service.js'
+import { mailService, loggedinUser } from '../services/mail.service.js'
 import { MailList } from '../cmps/MailList.jsx'
-const { Link, Outlet } = ReactRouterDOM
+import { MailDetails } from '../cmps/MailDetails.jsx'
+const { Link, NavLink, Outlet, useParams, useLocation, useSearchParams } = ReactRouterDOM
 
 const { useState, useEffect } = React
 
 export function MailIndex() {
     const [mails, setMails] = useState([])
+    const [searchParams] = useSearchParams()
+    const params = useParams()
+    const location = useLocation()
 
     useEffect(() => {
         mailService.query()
-            .then((mails) => setMails(mails))
+            .then((mails) => {
+                console.log('params.id', params.id);
+                setMails(mails)
+            })
             .catch((err) => console.error('can not fetch data', err)
             )
-    }, [])
+    }, [params])
 
+    // === FILTER ===
+    let mailsToShow = mails
+    if (location.pathname.includes('/sent')) {
+        mailsToShow = mails.filter(mail => mail.from === loggedinUser.email)
+    } else if (location.pathname.includes('/unread')) {
+        mailsToShow = mails.filter(mail => !mail.isRead && !mail.removedAt)
+    } else if (location.pathname.includes('/draft')) {
+        mailsToShow = mails.filter(mail => mail.isDraft && !mail.removedAt)
+    } else if (location.pathname.includes('/inbox')) {
+        mailsToShow = mails.filter(mail => !mail.removedAt && mail.from !== loggedinUser.email)
+    } else if (location.pathname.includes('/search')) {
+        const txt = searchParams.get('q') || ''
+        const regex = new RegExp(txt, 'i')
+        mailsToShow = mails.filter(mail =>
+            regex.test(mail.subject) || regex.test(mail.body) || regex.test(mail.to)
+        )
+    } else {
+        mailsToShow = mails.filter(mail => !mail.removedAt && mail.from !== loggedinUser.email)
+    }
+
+
+    // === SAVE MAILE (sent to MailCompose.jsx cmp trough Outlet context)
     function onSaveMail(mail) {
         mailService.save(mail)
             .then(mail => setMails(mails => [mail, ...mails]))
     }
 
+    // === BTNS (delete mail, read toggle)
     function onDeleteMail(mailId) {
         mailService.remove(mailId)
             .then(() => setMails(mails => mails.filter(mail => mail.id !== mailId)))
             .catch(err => console.error('Could not delete mail', err))
     }
 
+    function onToggleRead(mailId) {
+        setMails(mails =>
+            mails.map(mail =>
+                mail.id === mailId ? { ...mail, isRead: !mail.isRead } : mail
+            )
+        )
+    }
+
     const unreadMailsCount = mails.filter((mail) => !mail.isRead).length
+    const sentMailsCount = mails.filter((mail) => mail.from === loggedinUser.email).length
 
     return (
         <section className='mail-index'>
-            <header className='flex space-between'>
+            <header className='flex mail-header'>
+                <img src="./assets/icons/Gmail_icon.png" alt="" className='gmail-icon' />
                 <h1>Mail app</h1>
+                <div className='search-bar'>
+                    <img src="./assets/icons/search.svg" alt="" />
+                    <input name='search-mails' type="text" placeholder='Search mail' className='input-field' />
+                </div>
             </header>
             <div className='mail-layout'>
                 <aside>
                     <Link to='/mail/compose'><button className='compose-btn'><img src="./assets/icons/editIcon.svg" alt="edit" />Compose</button></Link>
-                    <Link to='/mail'>All ({mails.length})</Link>
-                    <Link to='/mail/unread'>Unread ({unreadMailsCount})</Link>
+                    <NavLink to='/mail/inbox'>Inbox ({mails.length})</NavLink>
+                    <NavLink to='/mail/unread'>Unread ({unreadMailsCount})</NavLink>
+                    <NavLink to='/mail/sent'>Sent ({sentMailsCount})</NavLink>
                 </aside>
                 <main>
-                    <MailList mails={mails} onDeleteMail={ onDeleteMail } />
+                    {!location.pathname.includes('/details') ?
+                        <MailList
+                            mails={mailsToShow}
+                            onDeleteMail={onDeleteMail}
+                            onToggleRead={onToggleRead}
+                        /> :
+                        <MailDetails />}
                 </main>
             </div>
-            <Outlet context={{ onSaveMail }} />
+            {params.id ? '' : <Outlet context={{ mails, onSaveMail }} />}
         </section>
     )
 }

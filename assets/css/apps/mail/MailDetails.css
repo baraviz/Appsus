@@ -1,0 +1,7 @@
+.mail-details {
+    border-radius: 16px;
+    padding: 40px;
+    background-color: #fff;
+    height: 71vh;
+    overflow-y: scroll;
+}

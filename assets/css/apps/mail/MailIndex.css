@@ -36,7 +36,7 @@ main {
   font-family: Roboto;
   border: none;
   border-radius: 16px;
-  transition: 0.2s;
+  transition: 0.1s;
 
   display: flex;
   gap: 16px;
@@ -46,7 +46,8 @@ main {
 }
 
 .compose-btn:hover {
-  filter: drop-shadow(0 1px 0.1rem rgb(176, 176, 176));
+  filter: drop-shadow(0 2px 0.2rem rgb(170, 170, 170));
+  background-color: #c1e7fe;
   cursor: pointer;
 }
 
@@ -57,5 +58,56 @@ main {
 .mail-index {
   background-color: #f7fafd;
   border-radius: 16px;
-  
+
+}
+
+.gmail-icon {
+  width: 30px;
+}
+
+.mail-header {
+  display: flex;
+  align-items: center;
+  padding: 1em 0 0 1em;
+  gap: 0.5em;
+  font-size: 20px;
+}
+
+.search-bar {
+  position: relative;
+  display: inline-block;
+}
+
+.search-bar img {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+  pointer-events: none;
+}
+
+.input-field {
+  padding: 1em;
+  padding-left: 35px;
+  height: 20px;
+  width: 30vw;
+  border: none;
+  border-radius: 256px;
+  background-color: #e9eef6;
+  font-size: 16px;
+}
+
+.input-field:focus {
+  outline: none;
+  background-color: #fff;
+  filter: drop-shadow(0 2px 0.2rem rgb(170, 170, 170));
+}
+
+.mail-layout aside .active {
+  background-color: #D3E2FD;
+  font-family: Roboto-Bold;
+  border-radius: 0 50px 50px 0;
 }
