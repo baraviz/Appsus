@@ -1,0 +1,4 @@
+
+.note-todos li.active{
+    text-decoration: line-through;  
+}

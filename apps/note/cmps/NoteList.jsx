@@ -1,19 +1,14 @@
 import { NotePreview } from './NotePreview.jsx'
 import { NoteTools } from './NoteTools.jsx'
 
-const { useState } = React
-
-export function NoteList({ notes, onRemoveNote, onSaveNote }) {
-
-  //   console.log(notes)
-
+export function NoteList({ notes, onRemoveNote, onUpdate,onSaveNote }) {
   return (
     <div>
       <ul className='note-list'>
         {notes.map((note) => (
           <li key={note.id} style={note.style}>
-            <NotePreview note={note} onSaveNote={onSaveNote} />
-            <NoteTools note={note} onRemoveNote={onRemoveNote}/>
+            <NotePreview note={note} onUpdate={onUpdate} />
+            <NoteTools note={note} onRemoveNote={onRemoveNote} onSaveNote={onSaveNote} onUpdate={onUpdate} />
           </li>
         ))}
       </ul>

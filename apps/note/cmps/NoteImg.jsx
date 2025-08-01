@@ -1,8 +1,9 @@
-const { useState } = React
+import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js'
 
 export function NoteImg({ note }) {
 const {info} = note
-  if (!info.url) return <div>Try different Url</div>
+  if (!info.url) return showErrorMsg('Try different Url')
+    
   return (
     <section>
       <img src={info.url} alt={info.title} />

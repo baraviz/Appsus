@@ -10,6 +10,7 @@ export function NotePreview(props) {
   }
 
   const{note}=props
+  
   return (
     <section className='note-preview' >
       {dynamicCmpMap[note.type]}
