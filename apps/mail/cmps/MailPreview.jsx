@@ -14,6 +14,11 @@ export function MailPreview({ mail, onDeleteMail, onToggleRead }) {
                 <button className="delete-btn" onClick={() => onDeleteMail(mail.id)}>
                     <img src="./assets/icons/delete.svg" alt="" />
                 </button>
+                <button className="keep-btn">
+                    <Link to={`/note/add?title=${subject.replace(' ', '+')}/txt=${body.replace(' ', '+')}`}>
+                        <img src="./assets/icons/keep.svg" alt="" />
+                    </Link>
+                </button>
                 <button className="read-toggle" onClick={() => onToggleRead(mail.id)}>
                     {
                         mail.isRead ?

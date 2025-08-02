@@ -7,7 +7,6 @@ export function MailCompose() {
     const { onSaveMail } = useOutletContext() || {}
     const navigate = useNavigate()
 
-
     const [mailToEdit, setMailToEdit] = useState(() => ({
         ...mailService.getEmptyMail(),
         to: searchParams.get('to') || '',
