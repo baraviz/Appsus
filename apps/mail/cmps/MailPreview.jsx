@@ -15,7 +15,7 @@ export function MailPreview({ mail, onDeleteMail, onToggleRead }) {
                     <img src="./assets/icons/delete.svg" alt="" />
                 </button>
                 <button className="keep-btn">
-                    <Link to={`/note/add?title=${subject.replace(' ', '+')}/txt=${body.replace(' ', '+')}`}>
+                    <Link to={`/note/add?txtN=${body.replace(' ', '+')}&title=${subject.replace(' ', '+')}`}>
                         <img src="./assets/icons/keep.svg" alt="" />
                     </Link>
                 </button>

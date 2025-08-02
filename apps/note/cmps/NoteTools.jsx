@@ -15,7 +15,7 @@ export function NoteTools({ note, onRemoveNote, onSaveNote, onUpdate }) {
     note.style = { backgroundColor: ev.target.value }
     // if (noteToEdit.type === 'NoteTodos') {
     //   noteToEdit.info.todos = noteService.strToList(noteToEdit.info.todos)}
-    // onUpdate(note)
+    onUpdate(note)
     
   }
 
