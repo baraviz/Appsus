@@ -3,22 +3,23 @@ import { noteService } from '../services/note.service.js'
 import { NoteTools } from './NoteTools.jsx'
 const { useParams, useNavigate } = ReactRouter
 const { useState, useEffect } = React
-const { useOutletContext } = ReactRouterDOM
+const { useOutletContext} = ReactRouterDOM
 
 export function NoteEdit() {
   const [note, setNote] = useState()
   const [fieldName, setFieldName] = useState()
-  const { onUpdate, onRemoveNote, onSaveNote } = useOutletContext()
+  const { onUpdate, onRemoveNote, onSaveNote, onSetAddNote } = useOutletContext()
   const { noteId } = useParams()
   const navigate = useNavigate()
-  if (!noteId) return
+ 
+   
 
   useEffect(() => {
     if (noteId) loadNote()
   }, [])
 
   function loadNote() {
-    // setIsLoading(true)
+
     noteService
       .get(noteId)
       .then((note) => {
@@ -28,10 +29,9 @@ export function NoteEdit() {
           const todos = note.info.todos.map((todo) => todo.txt)
           note.info.todos = todos.join(',')
         } else if (note.type === 'NoteImg') setFieldName('url')
-        else if (note.type === 'NoteTxt') setFieldName('txt')
+        else  setFieldName('txt')
       })
       .catch((err) => console.log('err:', err))
-    //   .finally(() => setIsLoading(false))
   }
 
   function handleChange({ target }) {
@@ -48,10 +48,11 @@ export function NoteEdit() {
       note.info.todos = noteService.strToList(note.info.todos)
     }
     onUpdate(note)
+    onSetAddNote()
     navigate('/note')
   }
 
-  if (!note) return <div></div>
+  if (!note) return <div>loading</div>
 
   const date = new Date(note.createdAt)
 
@@ -98,7 +99,9 @@ export function NoteEdit() {
             onRemoveNote={onRemoveNote}
             onSaveNote={onSaveNote}
           />
-          <button type="button" onClick={onUpdateNote} >close</button>
+          <button type='button' onClick={onUpdateNote}>
+            close
+          </button>
         </div>
       </form>
     </section>

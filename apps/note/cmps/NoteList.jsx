@@ -3,7 +3,7 @@ import { NoteTools } from './NoteTools.jsx'
 
 const { useNavigate } = ReactRouter
 
-export function NoteList({ notes, onRemoveNote, onUpdate, onSaveNote }) {
+export function NoteList({ notes, onRemoveNote, onUpdate, onSaveNote, onSetAddNote }) {
   const navigate = useNavigate()
 
 
@@ -12,7 +12,9 @@ export function NoteList({ notes, onRemoveNote, onUpdate, onSaveNote }) {
     <div>
       <ul className='note-list'>
         {notes.map((note) => (
-   <li onClick={() => {navigate(`/note/${note.id}`)}}
+   <li onClick={() => {
+    onSetAddNote()
+    navigate(`/note/${note.id}`) }}
             style={note.style}
             key={note.id} className="false"
           >

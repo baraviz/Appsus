@@ -9,6 +9,7 @@ const { useState, useEffect } = React
 const { useSearchParams, Outlet } = ReactRouterDOM
 
 export function NoteIndex() {
+  const [isAddNote, setIsAddNote] = useState(false)
   const [notes, setNotes] = useState(null)
   const [searchParams, setSearchParams] = useSearchParams()
   const [filterBy, setFilterBy] = useState(
@@ -65,6 +66,10 @@ export function NoteIndex() {
     setFilterBy({ ...filterByToEdit })
   }
 
+  function onSetAddNote(){
+    setIsAddNote((isAddNote) => !isAddNote)
+  }
+
   if (!notes) return <div className='loader'>Loading...</div>
   const pinnedList = notes.filter((note) => note.isPinned)
   const notPinnedList = notes.filter((note) => !note.isPinned)
@@ -76,7 +81,7 @@ export function NoteIndex() {
       <section className='main flex'>
         <Navigation />
         <section className='note-apply'>
-          <AddNote onSaveNote={onSaveNote} />
+        {!isAddNote &&  <AddNote onSaveNote={onSaveNote} />}
           {!!pinnedList.length && (
             <React.Fragment>
               <h2>Pinned</h2>
@@ -85,6 +90,7 @@ export function NoteIndex() {
                 onRemoveNote={onRemoveNote}
                 onUpdate={onUpdate}
                 onSaveNote={onSaveNote}
+                onSetAddNote={onSetAddNote}
               />
             </React.Fragment>
           )}
@@ -96,12 +102,13 @@ export function NoteIndex() {
                 onRemoveNote={onRemoveNote}
                 onUpdate={onUpdate}
                 onSaveNote={onSaveNote}
+                onSetAddNote={onSetAddNote}
               />
             </React.Fragment>
           )}
         </section>
       </section>
-          <Outlet context={{ onUpdate, onRemoveNote,onSaveNote}} />
+       {isAddNote &&  <Outlet context={{ onUpdate, onRemoveNote,onSaveNote, onSetAddNote}} />}
     </section>
   )
 }

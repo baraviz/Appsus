@@ -26,6 +26,7 @@ export function RootCmp() {
             <Route path='/mail/compose' element={<MailCompose />} />
           </Route>
           <Route path='/note' element={<NoteIndex />}>
+            <Route path='/note/add' element={<NoteIndex />} />
             <Route path='/note/:noteId' element={<NoteEdit />} />
           </Route>
         </Routes>
