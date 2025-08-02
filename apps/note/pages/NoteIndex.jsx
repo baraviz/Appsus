@@ -2,17 +2,18 @@ import { noteService } from '../services/note.service.js'
 import { NoteList } from '../cmps/NoteList.jsx'
 import { AddNote } from '../cmps/AddNote.jsx'
 import { Navigation } from '../cmps/Navgatin.jsx'
-import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js'
+import {showErrorMsg,showSuccessMsg} from '../../../services/event-bus.service.js'
 import { NoteFilter } from '../cmps/NoteFilter.jsx'
 
 const { useState, useEffect } = React
-const { useSearchParams } = ReactRouterDOM
+const { useSearchParams, Outlet } = ReactRouterDOM
 
 export function NoteIndex() {
   const [notes, setNotes] = useState(null)
   const [searchParams, setSearchParams] = useSearchParams()
-  const [filterBy, setFilterBy] = useState(noteService.getFilterFromSearchParams(searchParams))
-
+  const [filterBy, setFilterBy] = useState(
+    noteService.getFilterFromSearchParams(searchParams)
+  )
 
   useEffect(() => {
     setSearchParams(noteService.getTruthyValues(filterBy))
@@ -20,10 +21,10 @@ export function NoteIndex() {
   }, [filterBy])
 
   // console.log(searchParams);
-  
 
   function loadNotes() {
-    noteService.query(filterBy)
+    noteService
+      .query(filterBy)
       .then((notes) => setNotes(notes))
       .catch((err) => {
         console.log('err:', err)
@@ -32,11 +33,14 @@ export function NoteIndex() {
   }
 
   function onUpdate(note) {
-    noteService.save(note).then((note) => loadNotes())
+    noteService.save(note)
+    .then((note) => loadNotes())
+    .catch((err) => console.log(err))
   }
 
   function onSaveNote(note) {
-    noteService.save(note)
+    noteService
+      .save(note)
       .then((note) => {
         setNotes((notes) => [note, ...notes])
         showSuccessMsg('saved')
@@ -44,8 +48,9 @@ export function NoteIndex() {
       .catch((err) => console.log(err))
   }
 
-  function onRemoveNote(noteId) { 
-    noteService.remove(noteId)
+  function onRemoveNote(noteId) {
+    noteService
+      .remove(noteId)
       .then(() => {
         setNotes((prevNotes) => prevNotes.filter((note) => note.id !== noteId))
         showSuccessMsg(`Note (${noteId}) removed successfully!`)
@@ -56,13 +61,12 @@ export function NoteIndex() {
       })
   }
 
-
-   function onSetFilterBy(filterByToEdit) {
-        setFilterBy({ ...filterByToEdit })
-    }
+  function onSetFilterBy(filterByToEdit) {
+    setFilterBy({ ...filterByToEdit })
+  }
 
   if (!notes) return <div className='loader'>Loading...</div>
-  const pinnedList = notes.filter((note) => note.isPinned)  
+  const pinnedList = notes.filter((note) => note.isPinned)
   const notPinnedList = notes.filter((note) => !note.isPinned)
 
   return (
@@ -86,7 +90,7 @@ export function NoteIndex() {
           )}
           {notPinnedList && (
             <React.Fragment>
-             {!!pinnedList.length && <h2>Others</h2>}
+              {!!pinnedList.length && <h2>Others</h2>}
               <NoteList
                 notes={notPinnedList}
                 onRemoveNote={onRemoveNote}
@@ -97,6 +101,7 @@ export function NoteIndex() {
           )}
         </section>
       </section>
+          <Outlet context={{ onUpdate, onRemoveNote,onSaveNote}} />
     </section>
   )
 }

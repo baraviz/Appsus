@@ -29,19 +29,13 @@ export function AddNote({ onSaveNote }) {
     onOpenNote()
     if (!info.title && (!info.txt || !info.url || !info.todos)) return
     if (noteToEdit.type === 'NoteTodos') {
-      noteToEdit.info.todos = strToList(noteToEdit.info.todos)
+      noteToEdit.info.todos = noteService.strToList(noteToEdit.info.todos)
     }
     onSaveNote(noteToEdit)
     setNoteToEdit(noteService.getEmptyNote())
   }
 
-  function strToList(str) {
-    const todos = str.split(',')
-    const newTodos = todos.map((todo) => ({ txt: todo }))
-    console.log(newTodos)
 
-    return newTodos
-  }
 
   return (
     <section className='add-note'>

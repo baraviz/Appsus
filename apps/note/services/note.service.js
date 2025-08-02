@@ -14,6 +14,7 @@ export const noteService = {
   debounce,
   getFilterFromSearchParams,
   getTruthyValues,
+  strToList,
 
 }
 
@@ -81,6 +82,13 @@ function debounce(func, delay) {
     }, delay)
   }
 }
+
+  function strToList(str) {
+    const todos = str.split(',')
+    const newTodos = todos.map((todo) => ({ txt: todo }))
+   
+    return newTodos
+  }
 
 function _createNotes() {
   let notes = utilService.loadFromStorage(NOTE_KEY)
