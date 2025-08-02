@@ -10,10 +10,7 @@ export function AddNote({ onSaveNote }) {
   const location = useLocation()
    const navigate = useNavigate()
    
-  useEffect(()=>{
-    // if (searchParams.size){
-    //  console.log(searchParams.size);
-       
+  useEffect(()=>{      
      noteToEdit.info.title = searchParams.get('title')|| ''
      console.log(searchParams.get('title')|| ' ');
      

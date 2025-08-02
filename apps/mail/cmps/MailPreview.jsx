@@ -1,13 +1,15 @@
-const { Link } = ReactRouterDOM
+const { useSearchParams,Link, useNavigate } = ReactRouterDOM
 
 export function MailPreview({ mail, onDeleteMail, onToggleRead }) {
 
     const { subject, body } = mail
+   const [mailParams, setMailParams] = useSearchParams({
     
-    const noteParam = {
         title: mail.subject,
         txtN: mail.body,
-    }
+    
+   })
+  const navigate = useNavigate()
 
     return (
         <article className="mail-preview">
@@ -20,9 +22,9 @@ export function MailPreview({ mail, onDeleteMail, onToggleRead }) {
                     <img src="./assets/icons/delete.svg" alt="" />
                 </button>
                 <button className="keep-btn">
-                    <Link to={`/note/add?${noteParam}`}>
-                        <img src="./assets/icons/keep.svg" alt="" />
-                    </Link>
+                    
+                        <img onClick={() => navigate(`/note/add?${mailParams}`)} src="./assets/icons/keep.svg" alt=""  />
+                    
                 </button>
                 <button className="read-toggle" onClick={() => onToggleRead(mail.id)}>
                     {
