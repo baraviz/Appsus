@@ -111,3 +111,12 @@ main {
   font-family: Roboto-Bold;
   border-radius: 0 50px 50px 0;
 }
+
+aside .mail-folder {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+aside img {
+  width: 20px;
+}

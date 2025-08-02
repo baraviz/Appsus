@@ -3,6 +3,11 @@ const { Link } = ReactRouterDOM
 export function MailPreview({ mail, onDeleteMail, onToggleRead }) {
 
     const { subject, body } = mail
+    
+    const noteParam = {
+        title: mail.subject,
+        txtN: mail.body,
+    }
 
     return (
         <article className="mail-preview">
@@ -15,7 +20,7 @@ export function MailPreview({ mail, onDeleteMail, onToggleRead }) {
                     <img src="./assets/icons/delete.svg" alt="" />
                 </button>
                 <button className="keep-btn">
-                    <Link to={`/note/add?txtN=${body.replace(' ', '+')}&title=${subject.replace(' ', '+')}`}>
+                    <Link to={`/note/add?${noteParam}`}>
                         <img src="./assets/icons/keep.svg" alt="" />
                     </Link>
                 </button>
