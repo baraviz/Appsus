@@ -10,6 +10,48 @@
 
 .mail-preview {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    padding: 10px;
+}
+
+.mail-preview .delete-btn,
+.mail-preview .keep-btn,
+.mail-preview .read-toggle {
+    opacity: 0;
+    /* position: absolute; */
+    width: 30px;
+    height: 30px;
+    left: 10px;
+    top: 50%;
+    /* transform: translateY(-50%); */
+    color: #aaa;
+    padding: 5px;
+}
+
+.mail-preview:hover .delete-btn,
+.mail-preview:hover .keep-btn,
+.mail-preview:hover .read-toggle {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.preview-txt {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.preview-btns {
+    display: flex;
+    width: 10%;
+    justify-content: space-evenly;
+}
+
+.mail-preview .delete-btn:hover,
+.mail-preview .keep-btn:hover,
+.mail-preview .read-toggle:hover {
+    /* opacity: 1;
+    cursor: pointer; */
+    background: rgba(137, 137, 137, 0.2);
+    border-radius: 50%;
 }

@@ -5,6 +5,11 @@ import { storageService } from '../../../services/async-storage.service.js'
 
 const MAIL_KEY = 'mailDB'
 
+export const loggedinUser = {
+    email: 'user@appsus.com',
+    fullname: 'Mahatma Appsus'
+}
+
 const gMailsDemoData = [
     {
         id: 'e101',
@@ -199,7 +204,7 @@ function query(filterBy = {}) {
 }
 
 function get(mailId) {
-    return storageService.get(MAIL_KEY, mailId).then(_setNextPrevMailId)
+    return storageService.get(MAIL_KEY, mailId)
 }
 
 function remove(mailId) {
@@ -208,6 +213,7 @@ function remove(mailId) {
 }
 
 function save(mail) {
+    // console.log('mail', mail);
     if (mail.id) {
         return storageService.put(MAIL_KEY, mail)
     } else {
@@ -226,15 +232,15 @@ function _createMails() {
 
 function getEmptyMail() {
     return {
-        id: 'e101',
         createdAt: 1551133930500,
         subject: 'Miss you!',
         body: 'Would love to catch up sometimes',
         isRead: false,
-        sentAt: 1551133930594,
+        sentAt: null,
         removedAt: null,
-        from: 'momo@momo.com',
-        to: 'user@appsus.com'
+        from: loggedinUser.email,
+        to: 'user@appsus.com',
+        isDraft: false,
     }
 }
 

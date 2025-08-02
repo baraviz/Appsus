@@ -22,3 +22,18 @@ img {
     width: 100%;
     object-fit: cover;
 }
+
+button {
+    border: none;
+    font-size: 12px;
+    border-radius: 8px;
+    background: none;
+}
+
+button:hover {
+    background-color: rgb(233, 232, 232);
+}
+
+button img {
+    width: 20px;
+}

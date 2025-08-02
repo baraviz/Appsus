@@ -1,74 +1,89 @@
 import { mailService } from '../../mail/services/mail.service.js'
-const { useState } = React
-const { useOutletContext } = ReactRouterDOM
+const { useSearchParams, useOutletContext, useNavigate } = ReactRouterDOM
+const { useState, useEffect } = React
 
 export function MailCompose() {
-    console.log('Hi Im Here');
-
-    const [isAddMail, setIsAddMail] = useState(false)
-    const [mailToEdit, setMailToEdit] = useState(mailService.getEmptyMail())
+    const [searchParams, setSearchParams] = useSearchParams()
     const { onSaveMail } = useOutletContext() || {}
+    const navigate = useNavigate()
+
+    const [mailToEdit, setMailToEdit] = useState(() => ({
+        ...mailService.getEmptyMail(),
+        to: searchParams.get('to') || '',
+        subject: searchParams.get('subject') || '',
+        body: searchParams.get('body') || ''
+    }))
+
+    useEffect(() => {
+        setMailToEdit(prev => ({
+            ...prev,
+            to: searchParams.get('to') || '',
+            subject: searchParams.get('subject') || '',
+            body: searchParams.get('body') || ''
+        }))
+    }, [searchParams])
 
     function handleChange({ target }) {
-        const field = target.name
-        let value = target.value
-        setMailToEdit(prevMail => ({ ...prevMail, [field]: value }))
+        const { name, value } = target
+        setMailToEdit(prev => ({ ...prev, [name]: value }))
+        setSearchParams({
+            ...Object.fromEntries([...searchParams]),
+            [name]: value
+        })
     }
 
-    function onOpenMail() {
-        setIsAddMail(isAddMail => !isAddMail)
-    }
-
-    function onSave(ev) {
+    function onSend(ev) {
         ev.preventDefault()
-        onOpenMail()
         const newMail = {
             ...mailToEdit,
             createdAt: Date.now(),
             isRead: false,
+            sentAt: Date.now(),
         }
         onSaveMail(newMail)
-        setMailToEdit({ subject: '', body: '' })
+        setMailToEdit(mailService.getEmptyMail())
+        setSearchParams({})
+        navigate('/mail')
+    }
+
+    function onCancel() {
+        setSearchParams({})
+        navigate('/mail')
     }
 
     return (
         <div>
             <div className='dialog-backdrop'></div>
-            <section className='new-mail-dialog'>
-                {!isAddMail && (
+            <section className='MailType flex'>
+                <form onSubmit={onSend}>
                     <input
-                        onClick={onOpenMail}
+                        onChange={handleChange}
                         type='text'
-                        name=''
-                        id=''
-                        placeholder='Compose a mail...'
-                        readOnly
+                        name='to'
+                        id='to'
+                        placeholder='To'
+                        value={mailToEdit.to}
+                        autoFocus
                     />
-                )}
-                {isAddMail && (
-                    <section className='MailType flex'>
-                        <form onSubmit={onSave}>
-                            <input
-                                onChange={handleChange}
-                                type='text'
-                                name='subject'
-                                id='subject'
-                                placeholder='Subject'
-                                value={mailToEdit.subject}
-                            />
-                            <input
-                                onChange={handleChange}
-                                type='text'
-                                name='body'
-                                id='body'
-                                placeholder='Body'
-                                value={mailToEdit.body}
-                            />
-                            <button type='submit'>Send</button>
-                            <button type='button' onClick={onOpenMail}>Cancel</button>
-                        </form>
-                    </section>
-                )}
+                    <input
+                        onChange={handleChange}
+                        type='text'
+                        name='subject'
+                        id='subject'
+                        placeholder='Subject'
+                        value={mailToEdit.subject}
+                    />
+                    <input
+                        onChange={handleChange}
+                        type='text'
+                        name='body'
+                        id='body'
+                        placeholder='Body'
+                        value={mailToEdit.body}
+                    />
+                    <button type='submit'>Send</button>
+                    <button type='button' onClick={onCancel}>Cancel</button>
+                </form>
             </section>
         </div>
     )
