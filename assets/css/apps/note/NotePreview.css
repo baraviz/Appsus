@@ -1,4 +1,12 @@
+.note-preview h1 {
+  font-size: 1.33333em;
+  padding-bottom: 0;
+}
 
-.note-preview h1{
-    font-size:1.33333em ;
+.note-preview {
+  min-height: 60px;
+}
+
+.note-preview .note-txt p{
+    margin-block: 12px ;
 }

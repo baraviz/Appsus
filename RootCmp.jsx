@@ -13,16 +13,18 @@ import { MailDetails } from './apps/mail/cmps/MailDetails.jsx'
 
 // === NOTE ===
 import { NoteIndex } from './apps/note/pages/NoteIndex.jsx'
+import { NoteEdit } from './apps/note/cmps/NoteEdit.jsx'
 
 export function RootCmp() {
-    return <Router>
-        <section className="root-cmp">
-            <AppHeader />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/mail" element={<MailIndex />}>
-                    <Route path="compose" element={<MailCompose />} />
+  return (
+    <Router>
+      <section className='root-cmp'>
+        <AppHeader />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/mail' element={<MailIndex />}>
+            <Route path='compose' element={<MailCompose />} />
                     <Route path="inbox" element={<MailIndex />} />
                     <Route path="unread" element={<MailIndex />} />
                     <Route path="trash" element={<MailIndex />} />
@@ -30,10 +32,14 @@ export function RootCmp() {
                     <Route path="starred" element={<MailIndex />} />
                     <Route path="sent" element={<MailIndex />} />
                     <Route path="details/:id" element={<MailDetails />} />
-                </Route>
-                <Route path="/note" element={<NoteIndex />} />
-            </Routes>
-            <UserMsg />
-        </section>
+          </Route>
+          <Route path='/note' element={<NoteIndex />}>
+            <Route path='/note/add' element={<NoteIndex />} />
+            <Route path='/note/:noteId' element={<NoteEdit />} />
+          </Route>
+        </Routes>
+        <UserMsg />
+      </section>
     </Router>
+  )
 }

@@ -2,3 +2,12 @@
 .note-todos li.active{
     text-decoration: line-through;  
 }
+
+.note-todos img{
+    width: 1.2em;
+    padding-inline-end: 5px;
+}
+
+.note-todos li{
+    display:  flex;
+}

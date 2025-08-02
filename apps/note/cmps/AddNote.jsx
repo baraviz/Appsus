@@ -1,11 +1,14 @@
 import { noteService } from '../services/note.service.js'
 const { useState } = React
+const {useLocation, Link}=ReactRouterDOM
 
 export function AddNote({ onSaveNote }) {
-  const [isAddNote, setIsAddNote] = useState(false)
+  
   const [placeholder, setPlaceholder] = useState('')
   const [nameField, setNameField] = useState('txt')
   const [noteToEdit, setNoteToEdit] = useState(noteService.getEmptyNote())
+
+  const location= useLocation()
 
   const { info } = noteToEdit
   function handleChange({ target }) {
@@ -21,7 +24,6 @@ export function AddNote({ onSaveNote }) {
     setNoteToEdit((prev) => ({ ...prev, type }))
     setNameField(name)
     setPlaceholder(placeholder)
-    setIsAddNote((isAddNote) => !isAddNote)
   }
 
   function onSave(ev) {
@@ -29,24 +31,21 @@ export function AddNote({ onSaveNote }) {
     onOpenNote()
     if (!info.title && (!info.txt || !info.url || !info.todos)) return
     if (noteToEdit.type === 'NoteTodos') {
-      noteToEdit.info.todos = strToList(noteToEdit.info.todos)
+      noteToEdit.info.todos = noteService.strToList(noteToEdit.info.todos)
     }
     onSaveNote(noteToEdit)
     setNoteToEdit(noteService.getEmptyNote())
   }
 
-  function strToList(str) {
-    const todos = str.split(',')
-    const newTodos = todos.map((todo) => ({ txt: todo }))
-    console.log(newTodos)
 
-    return newTodos
-  }
 
   return (
     <section className='add-note'>
-      {!isAddNote && (
-        <React.Fragment>
+      {!location.pathname.includes('/add') && (
+        <Link to='/note/add'>
+        {/* <React.Fragment> */}
+          <section className='select'>
+          <div>
           <input
             onClick={() => onOpenNote('NoteTxt', 'Take a note', 'txt')}
             type='text'
@@ -54,21 +53,16 @@ export function AddNote({ onSaveNote }) {
             id='text'
             placeholder='Take a note'
           />
-          <button onClick={() => onOpenNote('NoteImg', 'Enter url', 'url')}>
-            img
-          </button>
-          <button
-            onClick={() =>
-              onOpenNote('NoteTodos', 'Enter list coma separated', 'todos')
-            }
-          >
-            list
-          </button>
-        </React.Fragment>
+          </div>
+           <img src='./assets/icons/image.svg'  onClick={() => onOpenNote('NoteImg', 'Enter url', 'url')} />
+            <img src='./assets/icons/checkdBox.svg'  onClick={() =>onOpenNote('NoteTodos', 'Enter list coma separated', 'todos') } />
+          </section>
+        {/* </React.Fragment> */}
+        </Link>
       )}
-      {isAddNote && (
+      {location.pathname.includes('/add') && (
         <section className='NoteType flex '>
-          <form>
+          <form onSubmit={onSave}>
             <input
               onChange={handleChange}
               type='text'
@@ -83,7 +77,7 @@ export function AddNote({ onSaveNote }) {
               id='txt'
               placeholder={placeholder}
             />
-            <button onClick={onSave}>close</button>
+          <Link to='/note'> <button type='button'>close</button></Link> 
           </form>
         </section>
       )}
