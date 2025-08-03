@@ -4,11 +4,10 @@ const { useState, useEffect} = React
 
 export function NoteFilter({ filterBy, onSetFilterBy }) {
   const [filterByToEdit, setFilterByToEdit] = useState({...filterBy})
-  // const onSetFilterByDebounce = useRef(noteService.debounce(onSetFilterBy, 500)).current
+ 
   
   useEffect(() => {
     onSetFilterBy(filterByToEdit)
-    //  onSetFilterByDebounce(filterByToEdit)
   }, [filterByToEdit])
 
   function handleChange({ target }) {
@@ -19,9 +18,9 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
 
   const { txt } = filterBy
   return (
-    <section className='note-header flex space-between'>
+    <section className='note-header flex'>
       <div>LOGO MissKeep</div>
-
+    <div className='search'>
       <input
         onChange={handleChange}
         type='txt'
@@ -30,6 +29,7 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
         value={txt}
         placeholder='Search'
       />
+      </div>
     </section>
   )
 }

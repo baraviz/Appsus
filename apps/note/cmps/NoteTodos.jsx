@@ -1,10 +1,10 @@
-// const { useState } = React
+
 
 export function NoteTodos({ note, onUpdate }) {
   const { info} = note
   const { todos } = info
 
-  // const [noteEd, setNote] = useState(note)
+
 
   function onChangeTodo(ev,todo) {
     ev.stopPropagation()

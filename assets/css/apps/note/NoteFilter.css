@@ -1,7 +1,18 @@
 .note-header {
   padding: 0.5714em;
   line-height: 1.9285em;
-  background-color: aqua;
-  /* position: fixed; */
-  box-shadow:rgb(218, 220, 224) 0px -1px 0px 0px inset;
+  align-items: center;
+  margin-bottom: 10px;
+  box-shadow: rgb(218, 220, 224) 0px -1px 0px 0px inset;
+}
+
+.note-header input {
+  outline: none;
+  border: none;
+  width: 50vw;
+  padding-left: 10px;
+  height: 48px;
+  border-radius: 8px;
+  margin-inline-start: 300px;
+  background: var(--search-bg-);
 }

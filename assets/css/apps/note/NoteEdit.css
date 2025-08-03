@@ -7,7 +7,6 @@
   height: 100%;
   overflow: auto;
   padding-top: 50px;
-
 }
 
 .note-edit .modal {
@@ -16,25 +15,29 @@
   opacity: 1;
   border: none;
   border-radius: 8px;
-  margin: 20% auto 15% auto;
-  /* translate: 100% 100%; */
-
+  margin: 15% auto 15% auto;
+  margin-inline-start: 40%;
   border: 1px solid transparent;
   max-width: 600px;
-  color: black;
-  
+  color: var(--text-color-);
+  transition: 0.5s;
+}
+
+.modal:hover .note-tools {
+  opacity: 1;
+  cursor: pointer;
 }
 
 .modal input {
   line-height: 1.5rem;
-  color: black;
+  color: var(--text-color-);
   border: none;
   margin: 0;
   padding: 12px 16px 12px 16px;
   overflow-wrap: break-word;
   width: max-content;
   background-color: transparent;
-
+  outline: none;
 }
 
 .modal .title:first-child {
@@ -42,7 +45,7 @@
   line-height: 1.5rem;
   font-feature-settings: 'liga' 0;
   color: black;
-  min-width:fit-content;
+  min-width: fit-content;
 }
 
 .modal .text:first-child {
@@ -51,14 +54,23 @@
   overflow-wrap: break-word;
   padding-inline: 12px;
   padding-block-end: 50px;
-  width:100%
+  width: 100%;
 }
 
-.modal.tools button {
-  align-self: end;
+.modal.tools {
+  flex-direction: row;
 }
 
 .modal .date {
   padding-inline-end: 12px;
   text-align: end;
+  padding-bottom: 20px;
+}
+
+.modal button {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  cursor: pointer;
+  font-size: 15px;
 }

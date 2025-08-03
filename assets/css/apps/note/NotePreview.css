@@ -5,6 +5,7 @@
 
 .note-preview {
   min-height: 60px;
+  padding-bottom: 50px;
 }
 
 .note-preview .note-txt p{

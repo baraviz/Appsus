@@ -1,6 +1,6 @@
 import { noteService } from '../services/note.service.js'
 const { useState, useEffect } = React
-const { useLocation, Link, useSearchParams,useNavigate } = ReactRouterDOM
+const { useLocation, Link, useSearchParams, useNavigate } = ReactRouterDOM
 
 export function AddNote({ onSaveNote }) {
   const [placeholder, setPlaceholder] = useState('')
@@ -8,20 +8,17 @@ export function AddNote({ onSaveNote }) {
   const [searchParams, setSearchParams] = useSearchParams()
   const [noteToEdit, setNoteToEdit] = useState(noteService.getEmptyNote())
   const location = useLocation()
-   const navigate = useNavigate()
-   
-  useEffect(()=>{      
-     noteToEdit.info.title = searchParams.get('title')|| ''
-     console.log(searchParams.get('title')|| ' ');
-     
-      noteToEdit.info[nameField]= searchParams.get('txtN')|| '' 
-      console.log( noteToEdit.info[nameField]);
-      noteToEdit.type= 'NoteTxt' 
-         
-    // }
+  const navigate = useNavigate()
 
-    // setSearchParams({txtN:info.txt,title:info.title})
-  },[searchParams])
+  useEffect(() => {
+    noteToEdit.info.title = searchParams.get('title') || ''
+    console.log(searchParams.get('title') || ' ')
+
+    noteToEdit.info[nameField] = searchParams.get('txtN') || ''
+    console.log(noteToEdit.info[nameField])
+    noteToEdit.type = 'NoteTxt'
+    
+  }, [searchParams])
 
   const { info } = noteToEdit
 
@@ -43,13 +40,17 @@ export function AddNote({ onSaveNote }) {
   function onSave(ev) {
     ev.preventDefault()
     onOpenNote()
-    if (!info.title && !info.txt || !info.title && !info.url || !info.title && !info.todos) return
+    if (
+      (!info.title && !info.txt) ||
+      (!info.title && !info.url) ||
+      (!info.title && !info.todos)
+    )
+      return navigate('/note')
     if (noteToEdit.type === 'NoteTodos') {
       noteToEdit.info.todos = noteService.strToList(noteToEdit.info.todos)
     }
-    console.log(noteToEdit);
     onSaveNote(noteToEdit)
-     
+
     setNoteToEdit(noteService.getEmptyNote())
     navigate('/note')
   }
@@ -82,27 +83,29 @@ export function AddNote({ onSaveNote }) {
         </Link>
       )}
       {location.pathname.includes('/add') && (
-        <section className='NoteType flex '>
+        <section className='note-type'>
           <form onSubmit={onSave}>
-            <input
-              onChange={handleChange}
-              type='text'
-              name='title'
-              id='title'
-              placeholder='Title'
-              value={info.title}
-            />
-            <input
-              onChange={handleChange}
-              type='text'
-              name={nameField}
-              id='txt'
-              placeholder={placeholder}
-              value={info[nameField]}
-            />
-   
-              <button onClick={onSave} >close</button>
-           
+            <div >
+              <input className='title'
+                onChange={handleChange}
+                type='text'
+                name='title'
+                id='title'
+                placeholder='Title'
+                value={info.title}
+              />
+            </div>
+            <div className='text'> 
+              <input
+                onChange={handleChange}
+                type='text'
+                name={nameField}
+                id='txt'
+                placeholder={placeholder}
+                value={info[nameField]}
+              />
+            </div>
+            <button onClick={onSave}>close</button>
           </form>
         </section>
       )}

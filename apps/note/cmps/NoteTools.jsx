@@ -13,8 +13,8 @@ export function NoteTools({ note, onRemoveNote, onSaveNote, onUpdate }) {
 
   function onSetColor(ev) {
     note.style = { backgroundColor: ev.target.value }
-    // if (noteToEdit.type === 'NoteTodos') {
-    //   noteToEdit.info.todos = noteService.strToList(noteToEdit.info.todos)}
+      //   if (noteToEdit.type === 'NoteTodos') {
+      // noteToEdit.info.todos = noteService.strToList(noteToEdit.info.todos)}
     onUpdate(note)
     
   }
@@ -23,6 +23,12 @@ export function NoteTools({ note, onRemoveNote, onSaveNote, onUpdate }) {
     const copyNote = structuredClone(note)
     copyNote.id = ''
     onSaveNote(copyNote)
+  }
+
+  function toggle(){
+     if(note.isPinned) note.isPinned = false
+     else note.isPinned =true
+   onUpdate(note)
   }
 
   return (
@@ -41,6 +47,7 @@ export function NoteTools({ note, onRemoveNote, onSaveNote, onUpdate }) {
         src='./assets/icons/send.svg'
         alt=''
       />
+      <img onClick={toggle} src='./assets/icons/pinned.svg' alt="" />
     </section>
   )
 }

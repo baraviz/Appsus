@@ -3,8 +3,8 @@
   bottom: 2px;
   font-size: inherit;
   margin: 8px 0;
-  opacity: 1;
-  background-color: var(--tool-bg);
+  opacity: 0;
+  
 }
 
 .note-list > li:hover .note-tools {
@@ -13,7 +13,8 @@
 }
 
 .note-tools img {
-  width: 32px;
+  width: 32px; 
+  margin-inline:5px ;
 }
 .palette > img {
   position: absolute;

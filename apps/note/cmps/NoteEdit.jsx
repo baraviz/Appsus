@@ -75,7 +75,6 @@ export function NoteEdit() {
             placeholder='Title'
           />
         </div>
-        {/* {note.type === 'NoteImg' && <img src={note.url}/>} */}
         <div>
           <input
             className='text'
@@ -99,9 +98,9 @@ export function NoteEdit() {
             onRemoveNote={onRemoveNote}
             onSaveNote={onSaveNote}
           />
-          <button type='button' onClick={onUpdateNote}>
+         <div >  <button type='button' onClick={onUpdateNote}>
             close
-          </button>
+          </button></div>
         </div>
       </form>
     </section>

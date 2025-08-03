@@ -2,7 +2,10 @@ import { noteService } from '../services/note.service.js'
 import { NoteList } from '../cmps/NoteList.jsx'
 import { AddNote } from '../cmps/AddNote.jsx'
 import { Navigation } from '../cmps/Navgatin.jsx'
-import {showErrorMsg,showSuccessMsg} from '../../../services/event-bus.service.js'
+import {
+  showErrorMsg,
+  showSuccessMsg,
+} from '../../../services/event-bus.service.js'
 import { NoteFilter } from '../cmps/NoteFilter.jsx'
 
 const { useState, useEffect } = React
@@ -21,7 +24,6 @@ export function NoteIndex() {
     loadNotes()
   }, [filterBy])
 
-  // console.log(searchParams);
 
   function loadNotes() {
     noteService
@@ -35,8 +37,8 @@ export function NoteIndex() {
 
   function onUpdate(note) {
     noteService.save(note)
-    .then((note) => loadNotes())
-    .catch((err) => console.log(err))
+      .then((note) => loadNotes())
+      .catch((err) => console.log(err))
   }
 
   function onSaveNote(note) {
@@ -66,7 +68,7 @@ export function NoteIndex() {
     setFilterBy({ ...filterByToEdit })
   }
 
-  function onSetAddNote(){
+  function onSetAddNote() {
     setIsAddNote((isAddNote) => !isAddNote)
   }
 
@@ -81,7 +83,7 @@ export function NoteIndex() {
       <section className='main flex'>
         <Navigation />
         <section className='note-apply'>
-        {!isAddNote &&  <AddNote onSaveNote={onSaveNote} />}
+          {!isAddNote && <AddNote onSaveNote={onSaveNote} />}
           {!!pinnedList.length && (
             <React.Fragment>
               <h2>Pinned</h2>
@@ -108,7 +110,11 @@ export function NoteIndex() {
           )}
         </section>
       </section>
-       {isAddNote &&  <Outlet context={{ onUpdate, onRemoveNote,onSaveNote, onSetAddNote}} />}
+      {isAddNote && (
+        <Outlet
+          context={{ onUpdate, onRemoveNote, onSaveNote, onSetAddNote }}
+        />
+      )}
     </section>
   )
 }

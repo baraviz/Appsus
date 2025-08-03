@@ -8,12 +8,11 @@ export function NoteImg({ note }) {
   img.src=`${info.url}`
 
    img.onload = ()=>{
-    // console.log('hi');
     setIsLoad(isLoad=>!isLoad)
 
  }},[])
 
-// console.log(isLoad);
+
 
   if (!isLoad) return <div>lading img...</div>
   return (

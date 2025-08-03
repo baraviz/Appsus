@@ -155,6 +155,61 @@ function _createNotes() {
         info: { url: 'http://unsplash.it/460/340/?2', title: 'Loli and Me' },
         style: { backgroundColor: '#878ef3ff' },
       },
+ {
+  id: 'n107',
+  createdAt: 1123333,
+  type: 'NoteAudio',
+  isPinned: true,
+  info: {
+    url: 'https://some-audio.com/song.mp3',
+    title: 'Relaxing Music'
+  },
+  style: { backgroundColor: '#dcedc8' } 
+},
+{
+  id: 'n108',
+  createdAt: 1140000,
+  type: 'NoteTxt',
+  isPinned: false,
+  info: { txt: 'Don’t forget to drink water 💧' },
+  style: { backgroundColor: '#fff9c4' }
+}, {
+  id: 'n109',
+  createdAt: 1140500,
+  type: 'NoteTxt',
+  isPinned: true,
+  info: { txt: 'Meeting with team at 10:00 🕙' },
+  style: { backgroundColor: '#c5cae9' }
+},{
+ id: 'n110',
+  createdAt: 1141000,
+  type: 'NoteTodos',
+  isPinned: false,
+  info: {
+    label: 'Daily Tasks',
+    todos: [
+      { txt: 'Check emails', doneAt: null },
+      { txt: 'Work on project', doneAt: null },
+      { txt: 'Go for a walk', doneAt: 1141500 }
+    ]
+  },
+  style: { backgroundColor: '#d7ffd9' }
+},
+{
+  id: 'n111',
+  createdAt: 1142000,
+  type: 'NoteTodos',
+  isPinned: true,
+  info: {
+    label: 'Packing List',
+    todos: [
+      { txt: 'Toothbrush', doneAt: 1142100 },
+      { txt: 'Clothes', doneAt: null },
+      { txt: 'Charger', doneAt: null }
+    ]
+  },
+  style: { backgroundColor: '#ffe0e0' }
+}
     ]
     utilService.saveToStorage(NOTE_KEY, notes)
   }
