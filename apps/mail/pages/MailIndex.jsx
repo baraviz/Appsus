@@ -21,7 +21,7 @@ export function MailIndex() {
     }, [params])
 
     // === FILTER ===
-    let mailsToShow = mails
+    let mailsToShow = [...mails]
 
     if (location.search.includes('search')) {
         const txt = searchParams.get('search') || ''
@@ -30,18 +30,23 @@ export function MailIndex() {
             mail.body.toLowerCase().includes(txt) ||
             mail.to.toLowerCase().includes(txt))
     } else if (location.pathname.includes('/sent')) {
-        mailsToShow = mails.filter(mail => mail.from === loggedinUser.email)
+        mailsToShow = mails.filter(mail => !mail.removedAt && mail.from === loggedinUser.email && mail.sentAt)
     } else if (location.pathname.includes('/unread')) {
-        mailsToShow = mails.filter(mail => !mail.isRead && !mail.removedAt)
+        mailsToShow = mails.filter(mail => !mail.isRead && !mail.removedAt && mail.sentAt)
     } else if (location.pathname.includes('/trash')) {
-        mailsToShow = mails.filter(mail => mail.removedAt)
+        mailsToShow = mails.filter(mail => mail.removedAt && mail.sentAt)
     } else if (location.pathname.includes('/draft')) {
-        mailsToShow = mails.filter(mail => mail.isDraft && !mail.removedAt)
+        mailsToShow = mails.filter(mail => !mail.removedAt && !mail.sentAt)
     } else if (location.pathname.includes('/inbox')) {
-        mailsToShow = mails.filter(mail => !mail.removedAt && mail.from !== loggedinUser.email)
+        mailsToShow = mails.filter(mail => !mail.removedAt && mail.from !== loggedinUser.email && mail.sentAt)
+    } else if (location.pathname.includes('/starred')) {
+        mailsToShow = mails.filter(mail => mail.isStarred && mail.sentAt)
     } else {
-        mailsToShow = mails.filter(mail => !mail.removedAt && mail.from !== loggedinUser.email)
+        mailsToShow = mails.filter(mail => !mail.removedAt && mail.from !== loggedinUser.email && mail.sentAt)
     }
+
+    // === SORT ===
+    mailsToShow.sort((a, b) => (b.sentAt || 0) - (a.sentAt || 0))
 
 
     // === SAVE MAILE (sent to MailCompose.jsx cmp trough Outlet context)
@@ -50,21 +55,23 @@ export function MailIndex() {
             .then(mail => setMails(mails => [mail, ...mails]))
     }
 
-    // === BTNS (delete mail, read toggle)
+    // === BTNS (delete mail, read toggle, star toggle)
 
     function onDeleteMail(mailId) {
-        const mailToDelete = mails.filter(mail => mail.id === mailId)
-        console.log('deleting...', mailToDelete);
+        const mailToDelete = mails.find(mail => mail.id === mailId)
         if (!mailToDelete.removedAt) {
             setMails(mails =>
                 mails.map(mail =>
                     mail.id === mailId ? { ...mail, removedAt: Date.now() } : mail
                 )
             )
-        }
-        else {
+            mailService.save({ ...mailToDelete, removedAt: Date.now() })
+        } else {
             mailService.remove(mailId)
-                .then(() => setMails(mails => mails.filter(mail => mail.id !== mailId)))
+                .then(() => {
+                    console.log('deleting...');
+                    setMails(mails => mails.filter(mail => mail.id !== mailId))
+                })
                 .catch(err => console.error('Could not delete mail', err))
         }
     }
@@ -75,24 +82,42 @@ export function MailIndex() {
                 mail.id === mailId ? { ...mail, isRead: !mail.isRead } : mail
             )
         )
+        const selectedMail = mails.find(mail => mail.id === mailId)
+        mailService.save({ ...selectedMail, isRead: !selectedMail.isRead })
     }
+
+    function onToggleStar(mailId) {
+        setMails(mails =>
+            mails.map(mail =>
+                mail.id === mailId ? { ...mail, isStarred: !mail.isStarred } : mail
+            )
+        )
+        const selectedMail = mails.find(mail => mail.id === mailId)
+        mailService.save({ ...selectedMail, isStarred: !selectedMail.isStarred })
+    }
+
 
     // === ADD INPUT VALUE TO PARAMS
     function handleChange({ target }) {
         const { name, value } = target
-        setSearchParams({
-            ...Object.fromEntries([...searchParams]),
-            [name]: value
-        })
+        if (!value) {
+            setSearchParams('/mail')
+            return
+        } else {
+            setSearchParams({
+                ...Object.fromEntries([...searchParams]),
+                [name]: value
+            })
+        }
     }
 
 
-
-    const unreadMailsCount = mails.filter((mail) => !mail.isRead).length
-    const sentMailsCount = mails.filter((mail) => mail.from === loggedinUser.email).length
-    const starredMailsCount = mails.filter((mail) => mail.isStarred).length
-    const trashMailsCount = mails.filter((mail) => mail.removedAt).length
-    const draftMailsCount = mails.filter((mail) => !mail.sentAt).length
+    const unreadMailsCount = mails.filter((mail) => !mail.isRead && !mail.removedAt && mail.sentAt).length
+    const sentMailsCount = mails.filter((mail) => mail.from === loggedinUser.email && !mail.removedAt && mail.sentAt).length
+    const starredMailsCount = mails.filter((mail) => !mail.removedAt && mail.isStarred && mail.sentAt).length
+    const trashMailsCount = mails.filter((mail) => mail.removedAt && mail.sentAt).length
+    const draftMailsCount = mails.filter((mail) => !mail.removedAt && !mail.sentAt).length
+    const inboxMailsCount = mails.filter((mail) => mail.from !== loggedinUser.email && !mail.removedAt && mail.sentAt).length
 
     return (
         <section className='mail-index'>
@@ -120,7 +145,7 @@ export function MailIndex() {
                     </Link>
                     <NavLink to='/mail/inbox' className='mail-folder'>
                         <img src="./assets/icons/inbox.svg" alt="" />
-                        Inbox ({mails.length})
+                        Inbox ({inboxMailsCount})
                     </NavLink>
                     <NavLink to='/mail/unread' className='mail-folder'>
                         <img src="./assets/icons/mark_mail_as_unread.svg" alt="" />
@@ -149,6 +174,7 @@ export function MailIndex() {
                             mails={mailsToShow}
                             onDeleteMail={onDeleteMail}
                             onToggleRead={onToggleRead}
+                            onToggleStar={onToggleStar}
                         /> :
                         <MailDetails />}
                 </main>

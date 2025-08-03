@@ -20,7 +20,7 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
   const { txt } = filterBy
   return (
     <section className='note-header flex space-between'>
-      <div>LOGO MissKeep</div>
+      <img src="./assets/imgs/keep-logo.png" alt="" />
 
       <input
         onChange={handleChange}
