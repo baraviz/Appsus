@@ -32,6 +32,7 @@ export function MailCompose() {
         })
     }
 
+
     function onSend(ev) {
         ev.preventDefault()
         const newMail = {
@@ -42,19 +43,30 @@ export function MailCompose() {
         }
         onSaveMail(newMail)
         setMailToEdit(mailService.getEmptyMail())
-        setSearchParams({})
-        navigate('/mail')
+        setTimeout(() => {
+            setSearchParams({})
+            navigate('/mail')
+        }, 101)
     }
 
     function onCancel() {
-        setSearchParams({})
-        navigate('/mail')
+        const newMail = {
+            ...mailToEdit,
+            createdAt: Date.now(),
+        }
+        onSaveMail(newMail)
+        setMailToEdit(mailService.getEmptyMail())
+        setTimeout(() => {
+            setSearchParams({})
+            navigate('/mail')
+        }, 101)
     }
 
     return (
         <div>
             <div className='dialog-backdrop'></div>
             <section className='MailType flex'>
+                <h1>New Message</h1>
                 <form onSubmit={onSend}>
                     <input
                         onChange={handleChange}
@@ -81,8 +93,8 @@ export function MailCompose() {
                         placeholder='Body'
                         value={mailToEdit.body}
                     />
-                    <button type='submit'>Send</button>
-                    <button type='button' onClick={onCancel}>Cancel</button>
+                    <button type='submit' className='send'>Send</button>
+                    <button type='button' onClick={onCancel} className='cancel'>Cancel</button>
                 </form>
             </section>
         </div>

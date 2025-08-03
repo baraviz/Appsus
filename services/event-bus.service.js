@@ -28,3 +28,12 @@ export function showSuccessMsg(txt) {
 export function showErrorMsg(txt) {
     showUserMsg({ txt, type: 'error' })
 }
+
+export function scrollToSection(sectionClass) {
+    const targetSection = document.getElementById(sectionClass);
+    if (targetSection) {
+        targetSection.scrollIntoView({
+            behavior: 'smooth'
+        });
+    }
+}

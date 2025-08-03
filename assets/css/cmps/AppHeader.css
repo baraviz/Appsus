@@ -11,6 +11,12 @@
     color: rgb(91, 91, 91);
 }
 
+.app-header nav {
+    display: flex;
+    gap: 16px;
+}
+
+
 nav a {
     margin: .5em;
     font-family: Roboto;
@@ -25,4 +31,15 @@ nav a.active {
 
 nav a:hover {
     text-decoration: underline 1px;
+}
+
+.header-title {
+    display: grid;
+    grid-template-columns: 0.3fr 1fr;
+    grid-template-rows: 1fr;
+    column-gap: 8px;
+}
+
+.header-title img {
+    width: 20px;
 }

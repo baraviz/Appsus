@@ -18,9 +18,9 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
 
   const { txt } = filterBy
   return (
-    <section className='note-header flex'>
+    <section className='note-header flex space-between'>
       <div>LOGO MissKeep</div>
-    <div className='search'>
+
       <input
         onChange={handleChange}
         type='txt'

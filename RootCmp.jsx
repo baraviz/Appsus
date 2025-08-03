@@ -23,19 +23,13 @@ export function RootCmp() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
-          <Route path='/mail' element={<MailIndex />}>
-            <Route path='compose' element={<MailCompose />} />
-                    <Route path="inbox" element={<MailIndex />} />
-                    <Route path="unread" element={<MailIndex />} />
-                    <Route path="trash" element={<MailIndex />} />
-                    <Route path="draft" element={<MailIndex />} />
-                    <Route path="starred" element={<MailIndex />} />
-                    <Route path="sent" element={<MailIndex />} />
-                    <Route path="details/:id" element={<MailDetails />} />
+          <Route path='/mail/*' element={<MailIndex />}>
+            <Route path="compose" element={<MailCompose />} />
+            <Route path="details/:id" element={<MailDetails />} />
           </Route>
-          <Route path='/note' element={<NoteIndex />}>
-            <Route path='/note/add' element={<NoteIndex />} />
-            <Route path='/note/:noteId' element={<NoteEdit />} />
+          <Route path='/note/*' element={<NoteIndex />}>
+            <Route path="add" element={<NoteIndex />} />
+            <Route path=":noteId" element={<NoteEdit />} />
           </Route>
         </Routes>
         <UserMsg />

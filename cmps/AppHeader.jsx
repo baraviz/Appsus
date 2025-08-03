@@ -7,10 +7,22 @@ export function AppHeader() {
             <h3>Appsus ✨</h3>
         </Link>
         <nav>
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/about">About</NavLink>
-            <NavLink to="/mail/inbox">Mail</NavLink>
-            <NavLink to="/note">Note</NavLink>
+            <NavLink to="/" className='header-title'>
+                <img src="./assets/icons/home.svg" alt="" />
+                Home
+            </NavLink>
+            <NavLink to="/about" className='header-title'>
+                <img src="./assets/icons/about.svg" alt="" />
+                About
+            </NavLink>
+            <NavLink to="/mail/inbox" className='header-title'>
+                <img src="./assets/icons/mail-logo.svg" alt="" />
+                Mail
+            </NavLink>
+            <NavLink to="/note" className='header-title'>
+                <img src="./assets/icons/keep.svg" alt="" />
+                Note
+            </NavLink>
         </nav>
     </header>
 }
