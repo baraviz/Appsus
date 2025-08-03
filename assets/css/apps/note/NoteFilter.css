@@ -6,6 +6,7 @@
   box-shadow:rgb(218, 220, 224) 0px -1px 0px 0px inset;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .note-header img {
@@ -13,6 +14,12 @@
 }
 
 .note-header input {
-  height: 35px;
+  outline: none;
+  border: none;
   width: 25vw;
+  padding-left: 10px;
+  height: 48px;
+  border-radius: 8px;
+  margin-inline-start: 300px;
+  background: var(--search-bg-);
 }

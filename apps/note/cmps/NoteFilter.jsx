@@ -1,11 +1,11 @@
 import { noteService } from '../services/note.service.js'
 
-const { useState, useEffect} = React
+const { useState, useEffect } = React
 
 export function NoteFilter({ filterBy, onSetFilterBy }) {
-  const [filterByToEdit, setFilterByToEdit] = useState({...filterBy})
- 
-  
+  const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
+
+
   useEffect(() => {
     onSetFilterBy(filterByToEdit)
   }, [filterByToEdit])
@@ -19,8 +19,7 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
   const { txt } = filterBy
   return (
     <section className='note-header flex space-between'>
-      <div>LOGO MissKeep</div>
-
+      <img src="./assets/imgs/keep-logo.png" alt="" />
       <input
         onChange={handleChange}
         type='txt'
@@ -29,7 +28,6 @@ export function NoteFilter({ filterBy, onSetFilterBy }) {
         value={txt}
         placeholder='Search'
       />
-      </div>
-    </section>
+    </section >
   )
 }
